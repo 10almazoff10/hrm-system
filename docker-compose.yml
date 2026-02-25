@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:18
+    container_name: vacation_db
+    restart: always
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vacation_user -d vacation_db"]
+      interval: 10s
+      timeout: 5s
+#      retries: 5
+
+  backend:
+    image: backend:1.1.0-02
+    container_name: vacation_backend
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+  frontend:
+    image: front:0.9
+    container_name: vacation_frontend
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:

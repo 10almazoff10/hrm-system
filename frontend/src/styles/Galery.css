@@ -1,0 +1,33 @@
+.gallery-item {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: scale(1.03) translateY(-4px) !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2) !important;
+}
+
+.gallery-item img, .gallery-item video {
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.nav-tabs .nav-link {
+    border: none !important;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #0d6efd !important;
+    color: white !important;
+}
+
+.gallery-modal .modal-content {
+    border-radius: 16px;
+    background: transparent;
+    border: none;
+    backdrop-filter: blur(10px);
+}

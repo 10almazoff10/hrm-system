@@ -1,0 +1,85 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+# ----------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------
+
+# OS specific support.  $var _must_ be set to either true or false.
+# The Windows path could be wrong. Verify before using.
+cygwin=false;
+darwin=false;
+mingw=false
+case "`uname`" in
+  CYGWIN*) cygwin=true ;;
+  MINGW*) mingw=true;;
+  Darwin*) darwin=true
+    # Use /usr/libexec/java_home if available, otherwise fall back to /System/Library/Frameworks/JavaVM.framework/Home/bin/java
+    # See https://developer.apple.com/library/mac/qa/qa1170/_index.html
+    if [ -z "$JAVA_HOME" ]; then
+      if [ -x "/usr/libexec/java_home" ]; then
+        JAVA_HOME=`/usr/libexec/java_home`
+      else
+        JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
+      fi
+    fi
+    ;;
+esac
+
+if [ -z "$MVNW_REPOURL" ]; then
+    MVNW_REPOURL="https://repo.maven.apache.org/maven2"
+fi
+
+# For Cygwin, ensure paths are in Unix format before anything is touched
+if $cygwin ; then
+    [ -n "$M2_HOME" ] &&
+        M2_HOME=`cygpath --unix "$M2_HOME"`
+    [ -n "$JAVA_HOME" ] &&
+        JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
+    [ -n "$CLASSPATH" ] &&
+        CLASSPATH=`cygpath --unix "$CLASSPATH"`
+fi
+
+# Detect if the maven wrapper directory is custom
+if [ -n "$MVNW_REPOURL" ]; then
+  # Download the maven-wrapper JAR
+  # Use the maven wrapper properties file to download the corresponding maven distribution
+  wrapperUrl="${MVNW_REPOURL}/org/apache/maven/wrapper/maven-wrapper/3.2.0/maven-wrapper-3.2.0.jar"
+  wrapperJarPath="${HOME}/.m2/wrapper/dist/maven-wrapper-3.2.0.jar"
+
+  # Create the wrapper jar file if it doesn't exist or if it has been externally deleted
+  if [ ! -f "${wrapperJarPath}" ]; then
+    mkdir -p "${HOME}/.m2/wrapper/dist"
+    echo "Downloading ${wrapperUrl}"
+    if command -v wget > /dev/null; then
+      wget "${wrapperUrl}" -O "${wrapperJarPath}"
+    elif command -v curl > /dev/null; then
+      curl "${wrapperUrl}" -o "${wrapperJarPath}"
+    else
+      echo "Either wget or curl should be available to download the maven wrapper."
+      exit 1
+    fi
+  fi
+  # Execute the wrapper using the downloaded jar
+  java -cp "${wrapperJarPath}" -Dmaven.multiModuleProjectDirectory="${MAVEN_PROJECTBASEDIR:-`pwd`}" \
+    org.apache.maven.wrapper.MavenWrapperMain "$@"
+else
+  # Execute the wrapper using the maven-wrapper JAR in the .mvn/wrapper subdirectory
+  java -cp ".mvn/wrapper/maven-wrapper-3.2.0.jar" -Dmaven.multiModuleProjectDirectory="${MAVEN_PROJECTBASEDIR:-`pwd`}" \
+    org.apache.maven.wrapper.MavenWrapperMain "$@"
+fi

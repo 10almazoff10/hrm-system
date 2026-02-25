@@ -1,0 +1,105 @@
+/* Делаем фон всей страницы мягким серым, чтобы белые карточки "выделялись" */
+body {
+  background-color: #f8f9fa;
+}
+
+/* Плавный переход для карточек при наведении */
+/*.card {*/
+/*  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;*/
+/*}*/
+
+/*.card:hover {*/
+/*  transform: translateY(-3px);*/
+/*  box-shadow: 0 .5rem 1rem rgba(0,0,0,.08)!important;*/
+/*}*/
+
+/* Настройка навигации: активная ссылка */
+.nav-link.active {
+  color: var(--bs-primary) !important;
+  font-weight: 600;
+}
+
+/* Чтобы контент не "прилипал" к краям на мобилках */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* Если захочешь кастомный градиент для виджета статистики */
+.bg-stats-gradient {
+  background: linear-gradient(45deg, #0d6efd 0%, #00d4ff 100%);
+}
+
+/* Основной контейнер с отступом под сайдбар */
+.main-wrapper {
+  margin-left: 280px; /* Ширина сайдбара */
+  transition: margin-left 0.3s ease;
+}
+
+/* Стили сайдбара */
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  border-right: 1px solid #dee2e6;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  color: #495057;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #f8f9fa;
+  color: #0d6efd;
+}
+
+.sidebar .nav-link.active {
+  background-color: #e7f1ff;
+  color: #0d6efd;
+}
+
+.sidebar .logout-link {
+  margin-top: auto; /* Прижать кнопку выхода к низу */
+}
+
+/* Адаптивность для мобилок */
+@media (max-width: 991px) {
+  .sidebar { transform: translateX(-100%); }
+  .main-wrapper { margin-left: 0; }
+}
+
+/* Отступ для fixed navbar на мобильных */
+@media (max-width: 991.98px) {
+  .main-wrapper {
+    padding-top: 70px !important;
+  }
+}
+
+/* Улучшение стилей для Offcanvas */
+.offcanvas {
+  background: #f8f9fa;
+}
+
+/* Активная ссылка в мобильном меню */
+.offcanvas .nav-link.active {
+  background-color: #0d6efd;
+  color: white !important;
+  border-radius: 8px;
+  margin: 2px 8px;
+}
