@@ -7,6 +7,6 @@ public record UserResponse(
         String lastName,
         String positionName,
         String companyName,
-        Long positionId,  // Добавь это
+        Long positionId,
         Long companyId
 ) {}

@@ -7,6 +7,7 @@ const Register = () => {
   const [userData, setUserData] = useState({
     username: '',
     password: '',
+    confirmPassword: '',
     firstName: '',
     lastName: ''
   });
@@ -22,6 +23,12 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    if (userData.password !== userData.confirmPassword) {
+      setError('Пароли не совпадают');
+      setLoading(false);
+      return;
+    }
 
     try {
       await api.post('/auth/register', userData);
@@ -95,6 +102,18 @@ const Register = () => {
                         name="password"
                         placeholder="Придумайте пароль"
                         value={userData.password}
+                        onChange={handleChange}
+                        required
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-4" controlId="confirmPassword">
+                    <Form.Label className="small fw-semibold">Подтвердите пароль</Form.Label>
+                    <Form.Control
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Повторите пароль"
+                        value={userData.confirmPassword}
                         onChange={handleChange}
                         required
                     />

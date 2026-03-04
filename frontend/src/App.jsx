@@ -9,13 +9,11 @@ import Layout from './components/Layout';
 import Galery from './pages/Galery.jsx';
 import Collegues from './pages/Collegues.jsx';
 
-
-
 import './App.css';
 
 function App() {
     return (
-        <Router> {/* <-- Обязательная обертка */}
+        <Router>
             <Routes>
                 {/* Публичные роуты */}
                 <Route path="/login" element={<Login />} />

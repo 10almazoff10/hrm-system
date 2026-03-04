@@ -208,8 +208,8 @@ const CreateVacation = () => {
     );
 
     return (
-        <div className="py-4">
-            <Container>
+        <div className="py-4 bg-light min-vh-100">
+            <Container fluid className="px-4">
                 <Row className="mb-4">
                     <Col>
                         <div className="d-flex align-items-center mb-3">
